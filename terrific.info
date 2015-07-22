@@ -1,0 +1,8 @@
+name = Terrific
+description = Terrific Drupal Integration Theme.
+core = 7.x
+
+regions[content] = Content
+regions[highlighted] = Hightlighted
+regions[sidebar_first] = Sidebar First
+regions[sidebar_second] = Sidebar Second
