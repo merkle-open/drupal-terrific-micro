@@ -4,6 +4,7 @@ This theme provides a theme to load a [Terrific Micro](https://github.com/namics
 
 ## Setup
 * Place terrific into your themes folder, as usual.
+* Rename the root folder to "terrific".
 * Enable and set the theme _Terrific_ as default.
 * You will see an example front page with two demo blocks, if Terrific could be loaded successfully. You can remove those by editing html.tpl.php.
 * Replace the folder terrific-micro/frontend with your existing Terrific Micro frontend or use the provided skeleton as a starting point to developer your frontend.
