@@ -1,0 +1,16 @@
+services:
+  terrific.template_locator.drupal:
+    class: \Drupal\terrific\DrupalAdapter\TemplateLocator
+    arguments: ['@config.factory', '@file_system']
+
+  terrific.twig.terrific_extension:
+    class: \Deniaz\Terrific\Twig\Extension\TerrificExtension
+    arguments: ['.html.twig']
+    tags:
+      - { name: twig.extension }
+
+  terrific.twig.component_loader:
+    class: \Deniaz\Terrific\Twig\Loader\TerrificLoader
+    arguments: ['@terrific.template_locator.drupal']
+    tags:
+      - { name: twig.loader, priority: 200 }
