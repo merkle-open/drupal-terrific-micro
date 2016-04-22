@@ -1,4 +1,4 @@
-name: Terrific
+name: Terrific Twig Bridge
 type: module
-description: Terrific's component Twig Function
+description: Bridge Module to the Terrific Twig Extension.
 core: 8.x

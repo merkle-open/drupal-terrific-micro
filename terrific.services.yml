@@ -5,7 +5,6 @@ services:
 
   terrific.twig.terrific_extension:
     class: \Deniaz\Terrific\Twig\Extension\TerrificExtension
-    arguments: ['.html.twig']
     tags:
       - { name: twig.extension }
 

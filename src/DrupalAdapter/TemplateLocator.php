@@ -8,19 +8,53 @@ use Drupal\Core\Config\ConfigFactory as DrupalConfigFactory;
 use Drupal\Core\File\FileSystemInterface;
 use \DomainException;
 
+/**
+ * TemplateLocator provides a number of properties on how to load terrific
+ * components.
+ *
+ * Class TemplateLocator
+ * @package Drupal\terrific\DrupalAdapter
+ *
+ * @author Robert Vogt <robert.vogt@namics.com>
+ */
 class TemplateLocator implements TemplateLocatorInterface {
 
+  /**
+   * @var array $paths List of paths where templates are stored.
+   */
   private $paths = [];
 
-  private $base_path = null;
+  /**
+   * @var string $base_path Path to Frontend Directory.
+   */
+  private $base_path = '';
 
-  private $terrific_config = null;
+  /**
+   * @var array $terrific_config Terrific's config.json Content.
+   */
+  private $terrific_config = [];
 
-  public function __construct(DrupalConfigFactory $config_factory, FileSystemInterface $filesystem) {
-    $this->base_path = $filesystem->realpath($config_factory->get('terrific.settings')->get('frontend_dir'));
+  /**
+   * TemplateLocator constructor.
+   * @param DrupalConfigFactory $config_factory
+   * @param FileSystemInterface $filesystem
+   */
+  public function __construct(
+    DrupalConfigFactory $config_factory,
+    FileSystemInterface $filesystem
+  ) {
+    $this->base_path = $filesystem
+      ->realpath(
+        $config_factory->get('terrific.settings')->get('frontend_dir')
+      );
+
     $this->terrific_config = (new ConfigReader($this->base_path))->read();
   }
 
+  /**
+   * Returns a list of paths where templates can be found.
+   * @return array
+   */
   public function getPaths() {
     if (empty($this->paths)) {
       $this->generatePaths();
@@ -29,18 +63,27 @@ class TemplateLocator implements TemplateLocatorInterface {
     return $this->paths;
   }
 
+  /**
+   * Generate Paths array from Terrific Configuration.
+   */
   private function generatePaths() {
-
-    foreach ($this->terrific_config['nitro']['components'] as $name => $component) {
+    $components = $this->terrific_config['nitro']['components'];
+    foreach ($components as $name => $component) {
       $this->paths[$name] = $this->base_path . '/' . $component['path'];
     }
   }
 
+  /**
+   * @return string Template File Extension.
+   */
   public function getFileExtension() {
-    if (!isset($this->terrific_config['nitro']['view_file_extension'])) {
-      throw new DomainException('Frontend template file extension not defined in config.json');
+    $fileExtension = $this->terrific_config['nitro']['view_file_extension'];
+    if (!isset($fileExtension)) {
+      throw new DomainException(
+        "Frontend Template File Extension not defined in Terrific's Configuration File."
+      );
     }
 
-    return $this->terrific_config['nitro']['view_file_extension'];
+    return $fileExtension;
   }
 }
