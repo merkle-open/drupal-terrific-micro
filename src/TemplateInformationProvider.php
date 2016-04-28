@@ -1,23 +1,14 @@
 <?php
 
-namespace Drupal\terrific\DrupalAdapter;
+namespace Drupal\terrific;
 
 use Deniaz\Terrific\Config\ConfigReader;
-use Deniaz\Terrific\TemplateLocatorInterface;
+use Deniaz\Terrific\Provider\TemplateInformationProviderInterface;
 use Drupal\Core\Config\ConfigFactory as DrupalConfigFactory;
 use Drupal\Core\File\FileSystemInterface;
 use \DomainException;
 
-/**
- * TemplateLocator provides a number of properties on how to load terrific
- * components.
- *
- * Class TemplateLocator
- * @package Drupal\terrific\DrupalAdapter
- *
- * @author Robert Vogt <robert.vogt@namics.com>
- */
-class TemplateLocator implements TemplateLocatorInterface {
+class TemplateInformationProvider implements TemplateInformationProviderInterface {
 
   /**
    * @var array $paths List of paths where templates are stored.
