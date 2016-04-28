@@ -1,14 +1,14 @@
 <?php
 
-namespace Drupal\terrific\DrupalAdapter;
+namespace Drupal\terrific;
 
 use Deniaz\Terrific\Config\ConfigReader;
-use Deniaz\Terrific\TemplateLocatorInterface;
+use Deniaz\Terrific\Provider\TemplateInformationProviderInterface;
 use Drupal\Core\Config\ConfigFactory as DrupalConfigFactory;
 use Drupal\Core\File\FileSystemInterface;
 use \DomainException;
 
-class TemplateLocator implements TemplateLocatorInterface {
+class TemplateInformationProvider implements TemplateInformationProviderInterface {
 
   private $paths = [];
 
