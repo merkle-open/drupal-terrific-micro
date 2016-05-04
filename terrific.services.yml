@@ -1,10 +1,10 @@
 services:
   terrific.template_information_provider:
-    class: \Drupal\terrific\TemplateInformationProvider
+    class: \Drupal\terrific\Adapter\TemplateInformationProvider
     arguments: ['@config.factory', '@file_system']
 
   terrific.context_provider:
-    class: \Drupal\terrific\ContextProvider
+    class: \Drupal\terrific\Adapter\ContextProvider
 
   terrific.twig.terrific_extension:
     class: \Deniaz\Terrific\Twig\Extension\TerrificExtension

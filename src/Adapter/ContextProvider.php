@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\terrific;
+namespace Drupal\terrific\Adapter;
 
 use Deniaz\Terrific\Provider\ContextProviderInterface;
 use Twig_Compiler;
@@ -9,6 +9,8 @@ use Twig_Node_Expression_Array;
 use Twig_Node_Expression_Constant;
 
 class ContextProvider implements ContextProviderInterface {
+
+  const TERRIFIC_ARRAY_KEY = '#terrific';
   /**
    * @var Twig_Compiler $compiler
    */
@@ -43,11 +45,10 @@ class ContextProvider implements ContextProviderInterface {
     $this->dataVariant = $dataVariant;
     $this->only = (bool) $only;
 
-    if (FALSE === $this->only) {
-      $this->compiler->raw('$tContext = $context;');
-    }
-    else {
-      $this->compiler->raw('$tContext = [];');
+    if ($this->only) {
+      $this->compiler
+        ->raw("\t")
+        ->raw('$tContext = [];');
     }
 
     $this->createContext();
@@ -66,21 +67,25 @@ class ContextProvider implements ContextProviderInterface {
         : $this->component->getAttribute('value');
 
       $this->compiler
-        ->raw("\n")
+        ->raw("\n")->addIndentation()
         ->raw('if (')
-        ->raw('isset($context["#terrific"]) && ')
-        ->raw('isset($context["#terrific"]["' . $dataKey . '"])')
+        ->raw('isset($context["' . self::TERRIFIC_ARRAY_KEY . '"]) && ')
+        ->raw('isset($context["' . self::TERRIFIC_ARRAY_KEY . '"]["' . $dataKey . '"])')
         ->raw(') {')
-        ->raw("\n\t")
+        ->raw("\n")->addIndentation()->addIndentation()
         ->raw('$tContext = array_merge($tContext, ')
-        ->raw('$context["#terrific"]["' . $dataKey . '"]')
+        ->raw('$context["' . self::TERRIFIC_ARRAY_KEY . '"]["' . $dataKey . '"]')
         ->raw(');')
-        ->raw("\n")
+        ->raw("\n")->addIndentation()
         ->raw('} else {')
+        ->raw("\n")->addIndentation()->addIndentation()
         ->raw('throw new \Twig_Error("')
         ->raw("Data Variant {$dataKey} not mapped. Check your preprocess hooks.")
         ->raw('");')
-        ->raw('}');
+        ->raw("\n")->addIndentation()
+        ->raw('}')
+        ->raw("\n\n")
+      ;
     }
   }
 }

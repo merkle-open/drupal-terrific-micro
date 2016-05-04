@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\terrific;
+namespace Drupal\terrific\Adapter;
 
 use Deniaz\Terrific\Config\ConfigReader;
 use Deniaz\Terrific\Provider\TemplateInformationProviderInterface;
