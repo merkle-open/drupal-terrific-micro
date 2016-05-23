@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of the Terrific Twig package.
+ *
+ * (c) Robert Vogt <robert.vogt@namics.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Drupal\terrific\Adapter;
 
 use Deniaz\Terrific\Config\ConfigReader;
@@ -8,8 +17,11 @@ use Drupal\Core\Config\ConfigFactory as DrupalConfigFactory;
 use Drupal\Core\File\FileSystemInterface;
 use \DomainException;
 
+/**
+ * Class TemplateInformationProvider
+ * @package Drupal\terrific\Adapter
+ */
 class TemplateInformationProvider implements TemplateInformationProviderInterface {
-
   /**
    * @var array $paths List of paths where templates are stored.
    */

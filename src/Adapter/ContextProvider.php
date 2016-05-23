@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of the Terrific Twig package.
+ *
+ * (c) Robert Vogt <robert.vogt@namics.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Drupal\terrific\Adapter;
 
 use Deniaz\Terrific\Provider\ContextProviderInterface;
@@ -8,8 +17,14 @@ use Twig_Node;
 use Twig_Node_Expression_Array;
 use Twig_Node_Expression_Constant;
 
+/**
+ * Class ContextProvider
+ * @package Drupal\terrific\Adapter
+ */
 class ContextProvider implements ContextProviderInterface {
-
+  /**
+   * @const string TERRIFIC_ARRAY_KEY Array Key where data is stored.
+   */
   const TERRIFIC_ARRAY_KEY = '#terrific';
   /**
    * @var Twig_Compiler $compiler
@@ -27,7 +42,7 @@ class ContextProvider implements ContextProviderInterface {
   private $dataVariant;
 
   /**
-   * @var bool $only
+   * @var bool $only If true a new context is created.
    */
   private $only;
 
@@ -54,6 +69,9 @@ class ContextProvider implements ContextProviderInterface {
     $this->createContext();
   }
 
+  /**
+   * Creates a new context or merges the variant with the existing context.
+   */
   private function createContext() {
     if ($this->dataVariant instanceof Twig_Node_Expression_Array) {
       $this->compiler
@@ -84,8 +102,7 @@ class ContextProvider implements ContextProviderInterface {
         ->raw('");')
         ->raw("\n")->addIndentation()
         ->raw('}')
-        ->raw("\n\n")
-      ;
+        ->raw("\n\n");
     }
   }
 }
